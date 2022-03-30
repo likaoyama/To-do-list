@@ -22,40 +22,45 @@
     <img src="./assets/pessoa-signup.png" alt="">
   </div>
   <div class="right">
-    <form>
+    <form id="formCreate">
       <div class="form-header">
         <p>To-Do App</p>
       </div>
 
-      <label>
+      <label for="name">
         Nome:
-        <input type="text">
+        <input id="name" type="text" name="name">
       </label>
-      <label>
+      <label for="nickname">
         Apelido:
-        <input type="text">
+        <input id="nickname" type="text" name="nickname">
       </label>
-      <label>
+      <label for="email">
         Email:
-        <input type="text">
+        <input id="email" type="email" name="email">
       </label>
-      <label>
+      <label for="password">
         Senha:
-        <input type="password">
+        <input id="password" type="password" name="password">
       </label>
-      <label>
+      <label for="passwordCheck">
         Repetir senha:
-        <input type="password">
+        <input id="passwordCheck" type="password" name="passwordCheck">
       </label>
+      <div id="errorMessage" hidden>
+          <small>
+            <ul></ul>
+          </small>
+      </div>
 
-      <button>Criar conta</button>
+      <button type="submit" class="btnCreate">Criar conta</button>
 
     </form>
     <div class="ingressar">
       <a href="index.html">Já possui conta? Acesse aqui</a>
     </div>
   </div>
-
+  <script src="./scripts/script.js"></script>
 </body>
 
 </html>
