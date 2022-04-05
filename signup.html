@@ -1,66 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do App</title>
+    <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
+    <link rel="stylesheet" href="styles/acesso.css" />
 
-  <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
-  <link rel="stylesheet" href="styles/acesso.css">
+    <!-- ---------------------- lógica aplicada no registro -------------------- -->
+    <script src="/scripts/utils.js"></script>
+    <script src="/scripts/signup.js"></script>
+    </head>
 
-  <!-- ---------------------- lógica aplicada no registro -------------------- -->
-  <script src="/scripts/utils.js"></script>
-  <script src="/scripts/signup.js"></script>
+  <body>
+    <div class="left">
+      <img src="./assets/pessoa-signup.png" alt="" />
+    </div>
+    <div class="right">
+      <form id="formCreate">
+        <div class="form-header">
+          <p>To-Do App</p>
+        </div>
 
-</head>
-
-<body>
-
-  <div class="left">
-    <img src="./assets/pessoa-signup.png" alt="">
-  </div>
-  <div class="right">
-    <form id="formCreate">
-      <div class="form-header">
-        <p>To-Do App</p>
-      </div>
-
-      <label for="name">
-        Nome:
-        <input id="name" type="text" name="name">
-      </label>
-      <label for="nickname">
-        Apelido:
-        <input id="nickname" type="text" name="nickname">
-      </label>
-      <label for="email">
-        Email:
-        <input id="email" type="email" name="email">
-      </label>
-      <label for="password">
-        Senha:
-        <input id="password" type="password" name="password">
-      </label>
-      <label for="passwordCheck">
-        Repetir senha:
-        <input id="passwordCheck" type="password" name="passwordCheck">
-      </label>
-      <div id="errorMessage" hidden>
+        <label for="firstName">
+          Nome:
+          <input id="firstName" type="text" name="firstName" />
+        </label>
+        <label for="lastName">
+          Sobrenome:
+          <input id="lastName" type="text" name="lastName" />
+        </label>
+        <label for="email">
+          Email:
+          <input id="email" type="email" name="email" />
+        </label>
+        <label for="password">
+          Senha:
+          <input id="password" type="password" name="password" />
+        </label>
+        <label for="passwordCheck">
+          Repetir senha:
+          <input id="passwordCheck" type="password" name="passwordCheck" />
+        </label>
+        <div id="errorMessage" hidden>
           <small>
             <ul></ul>
           </small>
+        </div>
+
+        <button type="submit" class="btnCreate">Criar conta</button>
+      </form>
+      <div class="ingressar">
+        <a href="index.html">Já possui conta? Acesse aqui</a>
       </div>
-
-      <button type="submit" class="btnCreate">Criar conta</button>
-
-    </form>
-    <div class="ingressar">
-      <a href="index.html">Já possui conta? Acesse aqui</a>
     </div>
-  </div>
-  <script src="./scripts/script.js"></script>
-</body>
-
+    <script src="./scripts/script.js"></script>
+  </body>
 </html>

@@ -22,3 +22,8 @@ button {
   border-radius: 3px;
   cursor: pointer;
 }
+
+#errorMessage li{
+  color: red;
+  list-style: none;
+}

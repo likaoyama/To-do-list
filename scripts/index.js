@@ -1,27 +1,60 @@
-let form = document.getElementById('formLogin');
-let email = localStorage.getItem('email');
-let password = localStorage.getItem('password');
-
-let error = document.querySelector('ul');
-let errorList = selectId('errorMessage');
-
-function errorMessage(message) {
-    error.innerHTML += "<li>" + message + "</li>";
+function selectId(id) {
+  return document.getElementById(id);
 }
 
-form.addEventListener('submit', function(event) {
+function empty(input) {
+  return input.value.trim() === "";
+}
 
-    error.innerHTML = '';
+function errorMessage(message) {
+  error.innerHTML += "<li>" + message + "</li>";
+}
 
-    if(email === null) {
-        errorMessage("Campo <b>email</b> não preenchido");
-    }
+let form = selectId("formLogin");
 
-    if(password === null) {
-        errorMessage("Campo <b>senha</b> não preenchido")
-    }
+let error = document.querySelector("ul");
+let errorList = selectId("errorMessage");
 
+form.addEventListener("submit", function (event) {
+  error.innerHTML = "";
 
+  if (empty(email)) {
+    errorMessage("Campo <b>email</b> não preenchido");
+  }
+
+  if (empty(password)) {
+    errorMessage("Campo <b>senha</b> não preenchido");
+  }
+
+  if (error.querySelectorAll("li").length > 0) {
     event.preventDefault();
-})
+    errorList.hidden = "";
+  }
 
+//Verificar
+//   let user = {
+//     email: email.value,
+//     password: password.value,
+//   };
+
+//   console.log(user);
+//   debugger;
+
+//   fetch("https://ctd-todo-api.herokuapp.com/v1/users/login", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(user),
+//   })
+//     .then(function (response) {
+//       console.log(response.json());
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       console.log(data);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     });
+});
