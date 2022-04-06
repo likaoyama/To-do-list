@@ -43,6 +43,7 @@ form.addEventListener("submit", function (event) {
     errorMessage("Campo <b>repetir senha</b> não preenchido");
   }
 
+  //Verificação se os dados da senha e da confirmação da senha são iguais
   if (password.value !== passwordCheck.value) {
     errorMessage("As senhas devem ser idênticas");
   }
@@ -51,7 +52,7 @@ form.addEventListener("submit", function (event) {
     errorList.hidden = "";
   }
 
-  //Verificar
+  //Comunicação com a API
   const user = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -60,7 +61,6 @@ form.addEventListener("submit", function (event) {
   };
 
   console.log(user);
-  debugger;
 
   const promise = fetch("https://ctd-todo-api.herokuapp.com/v1/users", {
     method: "POST",
