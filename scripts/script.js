@@ -16,7 +16,7 @@ function errorMessage(message) {
 let form = selectId("formCreate");
 
 let error = document.querySelector("ul");
-let errorList = selectId("errorMessage");
+let errorList = getElementbyClassName("errorMessage");
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -25,6 +25,7 @@ form.addEventListener("submit", function (event) {
 
   if (empty(firstName)) {
     errorMessage("Campo <b>nome</b> não preenchido");
+    error.classList.add(errorMessage)
   }
 
   if (empty(lastName)) {

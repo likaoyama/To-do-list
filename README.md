@@ -7,18 +7,18 @@ MVP Checklist:
 
 - Login (index.html)
 
-  - [ ] Campos devem ser obrigatórios
-  - [ ] Obter os dados preenchidos e realizar a chamada (fetch) de login
-  - [ ] Em caso de sucesso: Salvar o JWT em local ou session storage
+  - [X] Campos devem ser obrigatórios
+  - [X] Obter os dados preenchidos e realizar a chamada (fetch) de login
+  - [X] Em caso de sucesso: Salvar o JWT em local ou session storage
   - [ ] Em caso de sucesso: Redirecionar para tarefas.html
   - [ ] Em caso de erro: Informar (ex. com alert) o usuário que ocorreu um erro
 
 - Signup (signup.html)
 
-  - [ ] Campos devem ser obrigatórios
-  - [ ] Necessário validar igualdade dos campos senha e confirmar senha
-  - [ ] Obter os dados preenchidos e realizar a chamada (fetch) de cadastro
-  - [ ] Em caso de sucesso: Salvar o JWT em local ou session storage
+  - [X] Campos devem ser obrigatórios
+  - [X] Necessário validar igualdade dos campos senha e confirmar senha
+  - [X] Obter os dados preenchidos e realizar a chamada (fetch) de cadastro
+  - [X] Em caso de sucesso: Salvar o JWT em local ou session storage
   - [ ] Em caso de sucesso: Redirecionar para tarefas.html
   - [ ] Em caso de erro: Informar (ex. com alert) o usuário que ocorreu um erro
 
