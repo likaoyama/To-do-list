@@ -1,7 +1,7 @@
 # To Do - Checkpoint II
-## Disciplina - Front-end II
-## Digital House Brasil
-### Integrantes: Lika Oyama, Tamiris R. G. Costa, Roberta da Silva
+- Disciplina - Front-end II
+- Digital House Brasil
+- Integrantes: Lika Oyama, Tamiris R. G. Costa, Roberta da Silva
 
 MVP Checklist:
 
