@@ -16,16 +16,17 @@ function errorMessage(message) {
 let form = selectId("formCreate");
 
 let error = document.querySelector("ul");
-let errorList = getElementbyClassName("errorMessage");
+let errorList = selectId("errorMessage");
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   let firstName = selectId("firstName");
   error.innerHTML = "";
+  let email = selectId("email");
+  let password = selectId("password");
 
   if (empty(firstName)) {
     errorMessage("Campo <b>nome</b> não preenchido");
-    error.classList.add(errorMessage)
   }
 
   if (empty(lastName)) {
@@ -61,7 +62,6 @@ form.addEventListener("submit", function (event) {
     password: password.value,
   };
 
-  console.log(user);
 
   const promise = fetch("https://ctd-todo-api.herokuapp.com/v1/users", {
     method: "POST",
@@ -73,14 +73,18 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      console.log(response.json());
       return response.json();
     })
     .then(function (data) {
-      localStorage.setItem('token', data.jwt);
-      console.log(data);
+      if(data.jwt){
+        localStorage.setItem('token', data.jwt);
+        window.location.href = "tarefas.html"
+      } else {
+        throw "Erro ao criar usuário";
+      }
     })
+
     .catch(function (error) {
-      console.log(error);
+      alert(error);
     });
 });

@@ -27,3 +27,7 @@ button {
   color: red;
   list-style: none;
 }
+
+.errorField{
+  border: 1px solid red;
+}

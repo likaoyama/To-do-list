@@ -17,6 +17,8 @@ let form = selectId("formLogin");
 
 let error = document.querySelector("ul");
 let errorList = selectId("errorMessage");
+let email = selectId("email");
+let password = selectId("password");
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -55,10 +57,14 @@ form.addEventListener("submit", function (event) {
       return response.json();
     })
     .then(function (data) {
-      localStorage.setItem('token', data.jwt);
-      console.log(data);
+      if(data.jwt){
+          localStorage.setItem('token', data.jwt);
+          window.location.href = "tarefas.html";
+      } else {
+          throw "Erro ao realizar login, tente novamente!"
+      }
     })
     .catch(function (error) {
-      console.log(error);
+      alert(error);
     });
 });
