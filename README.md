@@ -40,9 +40,11 @@ Melhorias:
 
 Estrutura do projeto
 
-Nosso projeto é baseado em HTML, sem utilização de modulos ou bundlers.
+Nosso projeto é baseado em HTML, CSS e JavaScript sem utilização de modulos ou bundlers.
 
 Pastas:
 
 - assets: Contem os arquivos do projeto como imagens, fontes e vetores.
 - scripts: Contem os arquivos javascript do projeto. Separados por tela.
+- styles: Contém os arquivos css com a estilização das telas.
+- 

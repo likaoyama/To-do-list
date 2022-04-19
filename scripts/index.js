@@ -20,10 +20,12 @@ let errorList = selectId("errorMessage");
 let email = selectId("email");
 let password = selectId("password");
 
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   error.innerHTML = "";
 
+  //Quando o usuário clicar no botão submit ele receberá mensagens de erro caso os inputs estejam vazios.
   if (empty(email)) {
     errorMessage("Campo <b>email</b> não preenchido");
   }
@@ -54,13 +56,13 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      return response.json();
+      return response.json(); // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
     })
-    .then(function (data) {
-      if(data.jwt){
+    .then(function (data) { 
+      if(data.jwt){ //Se tiver o jwt, será salvo no localStorage e a página será redirecionada para a tela de tarefas.
           localStorage.setItem('token', data.jwt);
           window.location.href = "tarefas.html";
-      } else {
+      } else { // Mensagem de erro caso não haja o jwt que será exibido no alert
           throw "Erro ao realizar login, tente novamente!"
       }
     })

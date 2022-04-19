@@ -1,6 +1,6 @@
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('token'); // token salvo no localStorage
 
-
+// promessa que irá trazer as informações do nome e sobrenome do usuário e será inserido na classe user-name
 fetch("https://ctd-todo-api.herokuapp.com/v1/users/getMe", {
     headers: {
         "Content-Type": "application/json",
@@ -14,34 +14,34 @@ fetch("https://ctd-todo-api.herokuapp.com/v1/users/getMe", {
 });
 
 
-
+// Caso o usuário clique no botão de finalizar sessão, os dados do jwt que estavam salvos no localStorage serão apagados e o usuário será redirecionado para a tela de login
 let finalize = document.querySelector("#closeApp");
 finalize.addEventListener("click", function () {
     localStorage.clear();
     window.location.href = "index.html";
 });
 
-// Obter lista de tarefas
+// Obter lista de tarefas utilizando a chamada da API que se encontra no utils.js, passando apenas os parâmetros
 const listaTarefas = window.callApi ('/tasks', 'GET', '', token);
 
 listaTarefas
 // Caso tenha obtido a lista de tarefas
 .then((lista) => {
-    // Remover o skeleton
+    // Remove o id skeleton
     let selectSkeleton = document.getElementById("skeleton");
     selectSkeleton.remove()
     
     // Obter minha lista => <ul class="tarefas-pendentes"></ul>
     let tarefasPendentes = document.querySelector(".tarefas-pendentes");
+    // Obter minha lista => <ul class="tarefas-terminadas"></ul>
     let tarefasTerminadas = document.querySelector(".tarefas-terminadas")
 
-    // Pra cada tarefa da minha lista
-    // Executar meu loop (forEach ou for of)
+    // Pra cada tarefa da minha lista, executar o loop
     lista.forEach(item => {
         console.log(item);        
         // 1 - Criar um elemento <li>
         let lista = document.createElement("li");
-        // 2 - Atribuir a classe .tarefa ao elemento <li> className = "classe" / classList.add("classe")
+        // 2 - Atribuir a classe .tarefa ao elemento <li>
         lista.classList.add("tarefa");
         lista.id = item.id;
         // Verificar se a tarefa (item) não está concluída
@@ -53,8 +53,8 @@ listaTarefas
                     <p class="timestamp">${item.createdAt}</p>
                 </div>
             `  
-            tarefasPendentes.appendChild(lista);
-        } else {
+            tarefasPendentes.appendChild(lista); // adiciona as tarefas pendentes à lista
+        } else { // se estiver concluída, adiciona à lista de tarefas terminadas
             lista.innerHTML = `
                 <div class="descricao">
                     <p class="nome">${item.description}</p>
@@ -68,7 +68,7 @@ listaTarefas
 
 //Form Nova Tarefa: Ao enviar uma nova tarefa, deve realizar um post para API (/tasks)
 const formNovaTarefa = document.querySelector(".nova-tarefa");
-formNovaTarefa.addEventListener("submit", function (event) {
+formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o evento de submit de uma nova tarefa
     event.preventDefault();
     let descricao = document.querySelector("#novaTarefa");
     let tarefa = {
@@ -83,7 +83,7 @@ formNovaTarefa.addEventListener("submit", function (event) {
             let tarefasPendentes = document.querySelector(".tarefas-pendentes");
             // 1 - Criar um elemento <li>
             let lista = document.createElement("li");
-            // 2 - Atribuir a classe .tarefa ao elemento <li> className = "classe" / classList.add("classe")
+            // 2 - Atribuir a classe .tarefa ao elemento <li>
             lista.classList.add("tarefa");
             lista.id = response.id;
     
@@ -108,7 +108,8 @@ formNovaTarefa.addEventListener("submit", function (event) {
 
 // Selecionar elemento <div class="not-done"></div>
 let terminada = document.querySelectorAll(".not-done");
-// notDone.addEventListener("click", function)
+
+// Ao clicar no item .not-done, a chave completed (que será chamado de acordo com o ID) receberá o valor true e a tarefa será acrescentada à lista de tarefas terminadas
 terminada.addEventListener("click", function () {
     let id = this.parentElement.id;
     let tarefa = {
@@ -122,7 +123,7 @@ terminada.addEventListener("click", function () {
             let tarefasTerminadas = document.querySelector(".tarefas-terminadas");
             // 1 - Criar um elemento <li>
             let lista = document.createElement("li");
-            // 2 - Atribuir a classe .tarefa ao elemento <li> className = "classe" / classList.add("classe")
+            // 2 - Atribuir a classe .tarefa ao elemento <li>
             lista.classList.add("tarefa");
             lista.id = response.id;
             // Verificar se a tarefa (item) não está concluída

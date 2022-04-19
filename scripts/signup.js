@@ -20,11 +20,13 @@ let errorList = selectId("errorMessage");
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-  let firstName = selectId("firstName");
   error.innerHTML = "";
+
+  let firstName = selectId("firstName");
   let email = selectId("email");
   let password = selectId("password");
 
+  // Quando o usuário clicar no botão submit ele receberá mensagens de erro caso os inputs estejam vazios.
   if (empty(firstName)) {
     errorMessage("Campo <b>nome</b> não preenchido");
   }
@@ -50,6 +52,7 @@ form.addEventListener("submit", function (event) {
     errorMessage("As senhas devem ser idênticas");
   }
 
+  //Verifica se há mensagens de erro na lista e caso não tenha, esconde o errorList.
   if (error.querySelectorAll("li").length > 0) {
     errorList.hidden = "";
   }
@@ -73,17 +76,16 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      return response.json();
+      return response.json(); // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
     })
     .then(function (data) {
-      if(data.jwt){
+      if(data.jwt){ // Se houver o jwt, o mesmo será armazenado no localStorage e o usuário será redirecionado para a tela de tarefas
         localStorage.setItem('token', data.jwt);
         window.location.href = "tarefas.html"
-      } else {
+      } else { // Se não houver o jwt, o usuário receberá um alerta com erro.
         throw "Erro ao criar usuário";
       }
     })
-
     .catch(function (error) {
       alert(error);
     });
