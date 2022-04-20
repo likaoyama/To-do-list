@@ -1,15 +1,15 @@
+ //Pegar os elementos pelo id
 function selectId(id) {
-  //função para pegar os elementos pelo id
   return document.getElementById(id);
 }
 
+//Verificar se o input está vazio
 function empty(input) {
-  //função para verificar se o input está vazio
   return input.value.trim() === "";
 }
 
+//Criar uma lista de mensagens de erro
 function errorMessage(message) {
-  //função para criar uma lista de mensagens de erro
   error.innerHTML += "<li>" + message + "</li>";
 }
 
@@ -26,7 +26,7 @@ form.addEventListener("submit", function (event) {
   let email = selectId("email");
   let password = selectId("password");
 
-  // Quando o usuário clicar no botão submit ele receberá mensagens de erro caso os inputs estejam vazios.
+  // Verificar inputs vazios e retornar mensagem de erro.
   if (empty(firstName)) {
     errorMessage("Campo <b>nome</b> não preenchido");
   }
@@ -47,17 +47,17 @@ form.addEventListener("submit", function (event) {
     errorMessage("Campo <b>repetir senha</b> não preenchido");
   }
 
-  //Verificação se os dados da senha e da confirmação da senha são iguais
+  //Verificar se os campos de senha e confirmação de senha são iguais
   if (password.value !== passwordCheck.value) {
     errorMessage("As senhas devem ser idênticas");
   }
 
-  //Verifica se há mensagens de erro na lista e caso não tenha, esconde o errorList.
+  //Verificar se há mensagens de erro na lista e ocultar errorList.
   if (error.querySelectorAll("li").length > 0) {
     errorList.hidden = "";
   }
 
-  //Comunicação com a API
+  //Comunicar com a API
   const user = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -76,17 +76,18 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
       return response.json(); 
     })
     .then(function (data) {
-      // Se houver o jwt, o mesmo será armazenado no localStorage e o usuário será redirecionado para a tela de tarefas
+      // Verificar se há jwt, armazenar no localStorage e redirecionar usuário para a tela de tarefas
       if(data.jwt){ 
         localStorage.setItem('token', data.jwt);
-        window.location.href = "tarefas.html"
+        window.location.href = "tarefas.html";
+        alert("Usuário cadastrado com sucesso!");
+        
         // Se não houver o jwt, o usuário receberá um alerta com erro.
       } else { 
-        throw "Erro ao criar usuário";
+        throw "Erro ao criar usuário, verifique os dados e tente novamente!";
       }
     })
     .catch(function (error) {

@@ -1,15 +1,15 @@
+//Pegar os elementos pelo id
 function selectId(id) {
-  //função para pegar os elementos pelo id
   return document.getElementById(id);
 }
 
+//Verificar se o input está vazio
 function empty(input) {
-  //função para verificar se o input está vazio
   return input.value.trim() === "";
 }
 
+//Criar uma lista de mensagens de erro
 function errorMessage(message) {
-  //função para criar uma lista de mensagens de erro
   error.innerHTML += "<li>" + message + "</li>";
 }
 
@@ -25,7 +25,7 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();
   error.innerHTML = "";
 
-  //Quando o usuário clicar no botão submit ele receberá mensagens de erro caso os inputs estejam vazios.
+  //Verificar se inputs estão vazios e retornar mensagem de erro.
   if (empty(email)) {
     errorMessage("Campo <b>email</b> não preenchido");
   }
@@ -38,7 +38,7 @@ form.addEventListener("submit", function (event) {
     errorList.hidden = "";
   }
 
-  //Comunicação com a API
+  //Comunicar com a API
   const user = {
     email: email.value,
     password: password.value,
@@ -56,17 +56,16 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
       return response.json();
     })
     .then(function (data) {
-      //Se tiver o jwt, será salvo no localStorage e a página será redirecionada para a tela de tarefas.
+      // Verificar se há jwt, armazenar no localStorage e redirecionar usuário para a tela de tarefas
       if (data.jwt) {
         localStorage.setItem('token', data.jwt);
         window.location.href = "tarefas.html";
-        // Mensagem de erro caso não haja o jwt que será exibido no alert
+        // Se não houver o jwt, o usuário receberá um alerta com erro.
       } else {
-        throw "Erro ao realizar login, tente novamente!"
+        throw "Erro ao realizar login, verifique os dados e tente novamente!"
       }
     })
     .catch(function (error) {

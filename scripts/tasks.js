@@ -1,6 +1,6 @@
-const token = localStorage.getItem('token'); // token salvo no localStorage
+const token = localStorage.getItem('token');
 
-// promessa que irá trazer as informações do nome e sobrenome do usuário e será inserido na classe user-name
+// Trazer as informações do nome e sobrenome do usuário
 fetch("https://ctd-todo-api.herokuapp.com/v1/users/getMe", {
     headers: {
         "Content-Type": "application/json",
@@ -14,26 +14,25 @@ fetch("https://ctd-todo-api.herokuapp.com/v1/users/getMe", {
     });
 
 
-// Caso o usuário clique no botão de finalizar sessão, os dados do jwt que estavam salvos no localStorage serão apagados e o usuário será redirecionado para a tela de login
+// Finalizar sessão, os dados do jwt que estavam salvos no localStorage serão apagados 
+// e o usuário será redirecionado para a tela de login
 let finalize = document.querySelector("#closeApp");
 finalize.addEventListener("click", function () {
     localStorage.clear();
     window.location.href = "index.html";
 });
 
-// Obter lista de tarefas utilizando a chamada da API que se encontra no utils.js, passando apenas os parâmetros
+// Obter lista de tarefas utilizando a chamada da API que se encontra no utils.js
 const listaTarefas = await window.callApi('/tasks', 'GET', '', token);
 
-// Remove o id skeleton
+// Remover o id skeleton
 let selectSkeleton = document.getElementById("skeleton");
 selectSkeleton.remove()
 
-// Obter minha lista => <ul class="tarefas-pendentes"></ul>
+// Selecionar lista de tarefas pendentes e terminadas
 let tarefasPendentes = document.querySelector(".tarefas-pendentes");
-// Obter minha lista => <ul class="tarefas-terminadas"></ul>
 let tarefasTerminadas = document.querySelector(".tarefas-terminadas")
 
-// Pra cada tarefa da minha lista, executar o loop
 listaTarefas.forEach(item => {
     // 1 - Criar um elemento <li>
     let lista = document.createElement("li");
@@ -49,9 +48,10 @@ listaTarefas.forEach(item => {
                 <p class="timestamp">${item.createdAt}</p>
             </div>
         `
-        // adiciona as tarefas pendentes à lista
+        // Adicionar tarefas pendentes à lista
         tarefasPendentes.appendChild(lista);
-        // se estiver concluída, adiciona à lista de tarefas terminadas
+        
+        // Adicionar à lista de tarefas terminadas
     } else {
         lista.innerHTML = `
             <div class="descricao">
@@ -65,9 +65,9 @@ listaTarefas.forEach(item => {
 
 
 
-//Form Nova Tarefa: Ao enviar uma nova tarefa, deve realizar um post para API (/tasks)
+//Enviar uma nova tarefa
 const formNovaTarefa = document.querySelector(".nova-tarefa");
-// ao ouvir o evento de submit de uma nova tarefa
+
 formNovaTarefa.addEventListener("submit", function (event) {
 
     event.preventDefault();
@@ -90,6 +90,7 @@ formNovaTarefa.addEventListener("submit", function (event) {
             // 2 - Atribuir a classe .tarefa ao elemento <li>
             lista.classList.add("tarefa");
             lista.id = response.id;
+            span.innerHTML = '',
 
             // Verificar se a tarefa (item) não está concluída
             lista.innerHTML = `
@@ -99,6 +100,7 @@ formNovaTarefa.addEventListener("submit", function (event) {
                     <p class="timestamp">${response.createdAt}</p>
                 </div>
             `
+
             tarefasPendentes.prepend(lista);
 
             let botaoConcluir = lista.querySelector('.not-done')
@@ -111,7 +113,7 @@ formNovaTarefa.addEventListener("submit", function (event) {
     }
 })
 
-// Selecionar elemento <div class="not-done"></div>
+// Selecionar todos elementos <div class="not-done"></div>
 let terminadas = document.querySelectorAll(".not-done");
 
 const concluirTarefa = function() {
@@ -139,6 +141,7 @@ const concluirTarefa = function() {
                     <p class="timestamp">${response.createdAt}</p>
                 </div>
             `
+            confirm("Deseja concluir esta tarefa?");
             tarefasTerminadas.prepend(lista);
 
         })

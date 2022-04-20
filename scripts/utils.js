@@ -1,12 +1,12 @@
 //endereço principal da API
 window.enderecoApi = 'https://ctd-todo-api.herokuapp.com/v1';
 
+//Pegar os valor dos elementos pelo id
 window.getValue = (id) => {
-    //função para pegar os valor dos elementos pelo id
     return document.getElementById(id).value;
 }
 
-// função para chamar a API onde serão passados os parâmetros
+// Chamar a API
 window.callApi = (caminho, metodo, dados, jwt) => {
     return (
         fetch(window.enderecoApi + caminho, {
@@ -15,7 +15,7 @@ window.callApi = (caminho, metodo, dados, jwt) => {
                 "Content-Type": "application/json",
                 authorization: jwt
             },
-            // se houver corpo na requisição, os dados serão transformados em json, se não houver, eles serão nulos
+            // Verificar se há corpo na requisição
             body: dados ? JSON.stringify(dados) : null
 
         })
@@ -24,7 +24,7 @@ window.callApi = (caminho, metodo, dados, jwt) => {
     )
 }
 
-// função para verificar se houve retorno do status HTTP
+// Verificar se houve retorno do status HTTP
 window.obterJson = (resposta) => {
     if(!resposta.ok) {
         const err = new Error(`HTTP: ${resposta.status}`);
