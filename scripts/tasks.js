@@ -22,55 +22,58 @@ finalize.addEventListener("click", function () {
 });
 
 // Obter lista de tarefas utilizando a chamada da API que se encontra no utils.js, passando apenas os parâmetros
-const listaTarefas = window.callApi ('/tasks', 'GET', '', token);
+const listaTarefas = await window.callApi ('/tasks', 'GET', '', token);
 
-listaTarefas
-// Caso tenha obtido a lista de tarefas
-.then((lista) => {
-    // Remove o id skeleton
-    let selectSkeleton = document.getElementById("skeleton");
-    selectSkeleton.remove()
-    
-    // Obter minha lista => <ul class="tarefas-pendentes"></ul>
-    let tarefasPendentes = document.querySelector(".tarefas-pendentes");
-    // Obter minha lista => <ul class="tarefas-terminadas"></ul>
-    let tarefasTerminadas = document.querySelector(".tarefas-terminadas")
+// Remove o id skeleton
+let selectSkeleton = document.getElementById("skeleton");
+selectSkeleton.remove()
 
-    // Pra cada tarefa da minha lista, executar o loop
-    lista.forEach(item => {
-        console.log(item);        
-        // 1 - Criar um elemento <li>
-        let lista = document.createElement("li");
-        // 2 - Atribuir a classe .tarefa ao elemento <li>
-        lista.classList.add("tarefa");
-        lista.id = item.id;
-        // Verificar se a tarefa (item) não está concluída
-        if(!item.completed){
-            lista.innerHTML = `
-                <div class="not-done"></div>
-                <div class="descricao">
-                    <p class="nome">${item.description}</p>
-                    <p class="timestamp">${item.createdAt}</p>
-                </div>
-            `  
-            tarefasPendentes.appendChild(lista); // adiciona as tarefas pendentes à lista
-        } else { // se estiver concluída, adiciona à lista de tarefas terminadas
-            lista.innerHTML = `
-                <div class="descricao">
-                    <p class="nome">${item.description}</p>
-                    <p class="timestamp">${item.createdAt}</p>
-                </div>
-            `
-            tarefasTerminadas.appendChild(lista);
-        }
-    })
+// Obter minha lista => <ul class="tarefas-pendentes"></ul>
+let tarefasPendentes = document.querySelector(".tarefas-pendentes");
+// Obter minha lista => <ul class="tarefas-terminadas"></ul>
+let tarefasTerminadas = document.querySelector(".tarefas-terminadas")
+
+// Pra cada tarefa da minha lista, executar o loop
+listaTarefas.forEach(item => {
+    // console.log(item);        
+    // 1 - Criar um elemento <li>
+    let lista = document.createElement("li");
+    // 2 - Atribuir a classe .tarefa ao elemento <li>
+    lista.classList.add("tarefa");
+    lista.id = item.id;
+    // Verificar se a tarefa (item) não está concluída
+    if(!item.completed){
+        lista.innerHTML = `
+            <div class="not-done"></div>
+            <div class="descricao">
+                <p class="nome">${item.description}</p>
+                <p class="timestamp">${item.createdAt}</p>
+            </div>
+        `  
+        tarefasPendentes.appendChild(lista); // adiciona as tarefas pendentes à lista
+    } else { // se estiver concluída, adiciona à lista de tarefas terminadas
+        lista.innerHTML = `
+            <div class="descricao">
+                <p class="nome">${item.description}</p>
+                <p class="timestamp">${item.createdAt}</p>
+            </div>
+        `
+        tarefasTerminadas.appendChild(lista);
+    }
 })
+
+
 
 //Form Nova Tarefa: Ao enviar uma nova tarefa, deve realizar um post para API (/tasks)
 const formNovaTarefa = document.querySelector(".nova-tarefa");
 formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o evento de submit de uma nova tarefa
+    
     event.preventDefault();
     let descricao = document.querySelector("#novaTarefa");
+    let span = document.querySelector("span");
+    if(descricao === ""){
+        alert("Tarefa não pode estar vazia")
+    }
     let tarefa = {
         description: descricao.value,
         completed: false
@@ -78,7 +81,7 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
     const promise = window.callApi('/tasks', 'POST', tarefa, token);
     promise
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             descricao.value = "";
             let tarefasPendentes = document.querySelector(".tarefas-pendentes");
             // 1 - Criar um elemento <li>
@@ -95,8 +98,10 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
                     <p class="timestamp">${response.createdAt}</p>
                 </div>
             `
-              
             tarefasPendentes.prepend(lista);
+            
+            let botaoConcluir = lista.querySelector('.not-done')
+            botaoConcluir.addEventListener("click", concluirTarefa);
                 
         })
         .catch(function (error) {
@@ -104,22 +109,21 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
         })
 })
 
-//Quando uma tarefa for completada, deve realizar um put para API (tasks/ID_DA_TASK) alterando a chave completed para true
-
 // Selecionar elemento <div class="not-done"></div>
-let terminada = document.querySelectorAll(".not-done");
+let terminadas = document.querySelectorAll(".not-done");
 
-// Ao clicar no item .not-done, a chave completed (que será chamado de acordo com o ID) receberá o valor true e a tarefa será acrescentada à lista de tarefas terminadas
-terminada.addEventListener("click", function () {
-    let id = this.parentElement.id;
+const concluirTarefa = function() {
+    let divTarefa = this.parentElement;
+    let id = divTarefa.id;
+
     let tarefa = {
         completed: true
     }
+
     const promise = window.callApi(`/tasks/${id}`, 'PUT', tarefa, token);
     promise
         .then(function (response) {
-            console.log(response);
-            this.parentElement.remove();
+            divTarefa.remove();
             let tarefasTerminadas = document.querySelector(".tarefas-terminadas");
             // 1 - Criar um elemento <li>
             let lista = document.createElement("li");
@@ -133,13 +137,14 @@ terminada.addEventListener("click", function () {
                     <p class="timestamp">${response.createdAt}</p>
                 </div>
             `
-              
             tarefasTerminadas.prepend(lista);
                 
         })
         .catch(function (error) {
             console.log(error);
         })
+}
+
+terminadas.forEach((item) => {
+    item.addEventListener("click", concluirTarefa)
 })
-// Ela vai pegar o status daquela tarefa e mudar para completed: true
-// Depois adicionar <li> em tarefas terminadas
