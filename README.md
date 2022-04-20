@@ -29,12 +29,13 @@ MVP Checklist:
   - [X] Ao carregar a página, buscar as tarefas (get para /tasks) e exibir na lista
   - [X] Form Nova Tarefa: Ao enviar uma nova tarefa, deve realizar um post para API (/tasks)
   - [X] Quando uma tarefa for adicionada, a lista de tarefas deve ser atualizada
-  - [ ] Quando uma tarefa for completada, deve realizar um put para API (tasks/ID_DA_TASK) alterando a chave completed para true
+  - [X] Quando uma tarefa for completada, deve realizar um put para API (tasks/ID_DA_TASK) alterando a chave completed para true
 
 Melhorias:
 
-- Identificar campos invalidos com CSS (ex. borda vermelha)
-- Mensagem de erro na validação do login ou cadastro do usuário
+- Identificar campos invalidos com CSS;
+- Mensagem de erro na validação do login e cadastro do usuário;
+- Mensagem de erro quando o usuário tenta enviar uma nova tarefa com a descrição vazia;
 
 ---
 

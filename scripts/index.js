@@ -56,14 +56,17 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      return response.json(); // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
+      // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
+      return response.json();
     })
-    .then(function (data) { 
-      if(data.jwt){ //Se tiver o jwt, será salvo no localStorage e a página será redirecionada para a tela de tarefas.
-          localStorage.setItem('token', data.jwt);
-          window.location.href = "tarefas.html";
-      } else { // Mensagem de erro caso não haja o jwt que será exibido no alert
-          throw "Erro ao realizar login, tente novamente!"
+    .then(function (data) {
+      //Se tiver o jwt, será salvo no localStorage e a página será redirecionada para a tela de tarefas.
+      if (data.jwt) {
+        localStorage.setItem('token', data.jwt);
+        window.location.href = "tarefas.html";
+        // Mensagem de erro caso não haja o jwt que será exibido no alert
+      } else {
+        throw "Erro ao realizar login, tente novamente!"
       }
     })
     .catch(function (error) {

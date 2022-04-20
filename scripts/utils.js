@@ -1,4 +1,5 @@
-window.enderecoApi = 'https://ctd-todo-api.herokuapp.com/v1'; //endereço principal da API
+//endereço principal da API
+window.enderecoApi = 'https://ctd-todo-api.herokuapp.com/v1';
 
 window.getValue = (id) => {
     //função para pegar os valor dos elementos pelo id
@@ -12,13 +13,14 @@ window.callApi = (caminho, metodo, dados, jwt) => {
             method: metodo,
             headers: {
                 "Content-Type": "application/json",
-                authorization: jwt   
+                authorization: jwt
             },
-            body: dados ? JSON.stringify(dados) : null // se houver corpo na requisição, os dados serão transformados em json, se não houver, eles serão nulos
-            
+            // se houver corpo na requisição, os dados serão transformados em json, se não houver, eles serão nulos
+            body: dados ? JSON.stringify(dados) : null
+
         })
-        .then(res => window.obterJson(res))
-        .catch((err) => alert(err))
+            .then(res => window.obterJson(res))
+            .catch((err) => alert(err))
     )
 }
 

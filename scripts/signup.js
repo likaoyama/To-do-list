@@ -76,13 +76,16 @@ form.addEventListener("submit", function (event) {
 
   promise
     .then(function (response) {
-      return response.json(); // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
+      // Se houver resposta da Promessa, os dados serão salvos em formato JSON.
+      return response.json(); 
     })
     .then(function (data) {
-      if(data.jwt){ // Se houver o jwt, o mesmo será armazenado no localStorage e o usuário será redirecionado para a tela de tarefas
+      // Se houver o jwt, o mesmo será armazenado no localStorage e o usuário será redirecionado para a tela de tarefas
+      if(data.jwt){ 
         localStorage.setItem('token', data.jwt);
         window.location.href = "tarefas.html"
-      } else { // Se não houver o jwt, o usuário receberá um alerta com erro.
+        // Se não houver o jwt, o usuário receberá um alerta com erro.
+      } else { 
         throw "Erro ao criar usuário";
       }
     })

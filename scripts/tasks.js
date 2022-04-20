@@ -7,11 +7,11 @@ fetch("https://ctd-todo-api.herokuapp.com/v1/users/getMe", {
         authorization: token
     }
 })
-.then((response) => response.json())
-.then((user) => {
-    const element = document.querySelector(".user-name");
-    element.innerHTML = `${user.firstName} ${user.lastName}`
-});
+    .then((response) => response.json())
+    .then((user) => {
+        const element = document.querySelector(".user-name");
+        element.innerHTML = `${user.firstName} ${user.lastName}`
+    });
 
 
 // Caso o usuário clique no botão de finalizar sessão, os dados do jwt que estavam salvos no localStorage serão apagados e o usuário será redirecionado para a tela de login
@@ -22,7 +22,7 @@ finalize.addEventListener("click", function () {
 });
 
 // Obter lista de tarefas utilizando a chamada da API que se encontra no utils.js, passando apenas os parâmetros
-const listaTarefas = await window.callApi ('/tasks', 'GET', '', token);
+const listaTarefas = await window.callApi('/tasks', 'GET', '', token);
 
 // Remove o id skeleton
 let selectSkeleton = document.getElementById("skeleton");
@@ -35,7 +35,6 @@ let tarefasTerminadas = document.querySelector(".tarefas-terminadas")
 
 // Pra cada tarefa da minha lista, executar o loop
 listaTarefas.forEach(item => {
-    // console.log(item);        
     // 1 - Criar um elemento <li>
     let lista = document.createElement("li");
     // 2 - Atribuir a classe .tarefa ao elemento <li>
@@ -49,9 +48,11 @@ listaTarefas.forEach(item => {
                 <p class="nome">${item.description}</p>
                 <p class="timestamp">${item.createdAt}</p>
             </div>
-        `  
-        tarefasPendentes.appendChild(lista); // adiciona as tarefas pendentes à lista
-    } else { // se estiver concluída, adiciona à lista de tarefas terminadas
+        `
+        // adiciona as tarefas pendentes à lista
+        tarefasPendentes.appendChild(lista);
+        // se estiver concluída, adiciona à lista de tarefas terminadas
+    } else {
         lista.innerHTML = `
             <div class="descricao">
                 <p class="nome">${item.description}</p>
@@ -66,13 +67,14 @@ listaTarefas.forEach(item => {
 
 //Form Nova Tarefa: Ao enviar uma nova tarefa, deve realizar um post para API (/tasks)
 const formNovaTarefa = document.querySelector(".nova-tarefa");
-formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o evento de submit de uma nova tarefa
-    
+// ao ouvir o evento de submit de uma nova tarefa
+formNovaTarefa.addEventListener("submit", function (event) {
+
     event.preventDefault();
     let descricao = document.querySelector("#novaTarefa");
     let span = document.querySelector("span");
     if(descricao.value === ""){
-        span.innerHTML = "Tarefa não pode estar vazia";   
+        span.innerHTML = "Tarefa não pode estar vazia";
     } else {
     let tarefa = {
         description: descricao.value,
@@ -81,7 +83,6 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
     const promise = window.callApi('/tasks', 'POST', tarefa, token);
     promise
         .then(function (response) {
-            // console.log(response);
             descricao.value = "";
             let tarefasPendentes = document.querySelector(".tarefas-pendentes");
             // 1 - Criar um elemento <li>
@@ -89,7 +90,7 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
             // 2 - Atribuir a classe .tarefa ao elemento <li>
             lista.classList.add("tarefa");
             lista.id = response.id;
-    
+
             // Verificar se a tarefa (item) não está concluída
             lista.innerHTML = `
                 <div class="not-done"></div>
@@ -99,10 +100,10 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
                 </div>
             `
             tarefasPendentes.prepend(lista);
-            
+
             let botaoConcluir = lista.querySelector('.not-done')
             botaoConcluir.addEventListener("click", concluirTarefa);
-                
+
         })
         .catch(function (error) {
             console.log(error);
@@ -139,7 +140,7 @@ const concluirTarefa = function() {
                 </div>
             `
             tarefasTerminadas.prepend(lista);
-                
+
         })
         .catch(function (error) {
             console.log(error);
