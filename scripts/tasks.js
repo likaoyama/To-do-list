@@ -18,6 +18,7 @@ fetch("https://ctd-todo-api.herokuapp.com/v1/users/getMe", {
 // e o usuário será redirecionado para a tela de login
 let finalize = document.querySelector("#closeApp");
 finalize.addEventListener("click", function () {
+    confirm("Deseja encerrar a sessão?");
     localStorage.clear();
     window.location.href = "index.html";
 });
