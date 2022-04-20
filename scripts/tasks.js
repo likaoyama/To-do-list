@@ -71,9 +71,9 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
     event.preventDefault();
     let descricao = document.querySelector("#novaTarefa");
     let span = document.querySelector("span");
-    if(descricao === ""){
-        alert("Tarefa não pode estar vazia")
-    }
+    if(descricao.value === ""){
+        span.innerHTML = "Tarefa não pode estar vazia";   
+    } else {
     let tarefa = {
         description: descricao.value,
         completed: false
@@ -107,6 +107,7 @@ formNovaTarefa.addEventListener("submit", function (event) { // ao ouvir o event
         .catch(function (error) {
             console.log(error);
         })
+    }
 })
 
 // Selecionar elemento <div class="not-done"></div>
