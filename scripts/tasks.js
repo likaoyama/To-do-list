@@ -113,6 +113,11 @@ formNovaTarefa.addEventListener("submit", function (event) {
         `);
 
         tarefasPendentes.prepend(lista);
+        notie.alert({
+            type: "success",
+            text: "Tarefa criada com sucesso",
+            position: "top",
+        });
 
         let botaoConcluir = lista.querySelector(".not-done");
         botaoConcluir.addEventListener("click", concluirTarefa);
