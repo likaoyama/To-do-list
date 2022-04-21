@@ -20,7 +20,6 @@ let errorList = selectId("errorMessage");
 let email = selectId("email");
 let password = selectId("password");
 
-
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   error.innerHTML = "";
@@ -49,9 +48,9 @@ form.addEventListener("submit", function (event) {
   const promise = fetch("https://ctd-todo-api.herokuapp.com/v1/users/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   });
 
   promise
@@ -61,11 +60,20 @@ form.addEventListener("submit", function (event) {
     .then(function (data) {
       // Verificar se há jwt, armazenar no localStorage e redirecionar usuário para a tela de tarefas
       if (data.jwt) {
-        localStorage.setItem('token', data.jwt);
+        localStorage.setItem("token", data.jwt);
+        notie.alert({
+          type: "success",
+          text: "Login realizado com sucesso",
+          position: "top",
+        });
         window.location.href = "tarefas.html";
         // Se não houver o jwt, o usuário receberá um alerta com erro.
       } else {
-        throw "Erro ao realizar login, verifique os dados e tente novamente!"
+        notie.alert({
+          type: "error",
+          text: "Erro ao realizar login, verifique os dados e tente novamente!",
+          position: "top",
+        });
       }
     })
     .catch(function (error) {

@@ -31,11 +31,12 @@ MVP Checklist:
   - [X] Quando uma tarefa for adicionada, a lista de tarefas deve ser atualizada
   - [X] Quando uma tarefa for completada, deve realizar um put para API (tasks/ID_DA_TASK) alterando a chave completed para true
 
-Melhorias:
+Melhorias realizadas:
 
 - Identificar campos invalidos com CSS;
 - Mensagem de erro na validação do login e cadastro do usuário;
 - Mensagem de erro quando o usuário tenta enviar uma nova tarefa com a descrição vazia;
+- Utilização da biblioteca Notie para exibição de alertas ao usuário;
 
 ---
 

@@ -19,8 +19,8 @@ window.callApi = (caminho, metodo, dados, jwt) => {
             body: dados ? JSON.stringify(dados) : null
 
         })
-            .then(res => window.obterJson(res))
-            .catch((err) => alert(err))
+        .then(res => window.obterJson(res))
+        .catch((err) => notie.alert(err))
     )
 }
 

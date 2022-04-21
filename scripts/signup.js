@@ -81,16 +81,24 @@ form.addEventListener("submit", function (event) {
     .then(function (data) {
       // Verificar se há jwt, armazenar no localStorage e redirecionar usuário para a tela de tarefas
       if(data.jwt){ 
-        localStorage.setItem('token', data.jwt);
+
+        notie.alert({
+          type: "success", 
+          text: "Usuário cadastrado com sucesso!",
+          position: "top" 
+        })
+        localStorage.setItem('token', data.jwt);        
         window.location.href = "tarefas.html";
-        alert("Usuário cadastrado com sucesso!");
-        
         // Se não houver o jwt, o usuário receberá um alerta com erro.
       } else { 
-        throw "Erro ao criar usuário, verifique os dados e tente novamente!";
+        notie.alert({
+          type: "error", 
+          text: "Erro ao realizar cadastro, verifique os campos e tente novamente!",
+          position: "top" 
+        })
       }
     })
     .catch(function (error) {
-      alert(error);
+      console.log(error);
     });
 });
